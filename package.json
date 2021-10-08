@@ -1,0 +1,17 @@
+{
+  "name": "abolish-docs",
+  "version": "1.0.0",
+  "description": "Abolish Javascript Validator Documentation",
+  "main": "index.md",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "test": "nodemon test.js"
+  },
+  "devDependencies": {
+    "abolish": "^4.5.3",
+    "vuepress-vite": "^2.0.0-beta.26"
+  },
+  "dependencies": {}
+}
