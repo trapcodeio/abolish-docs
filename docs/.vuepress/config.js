@@ -22,6 +22,16 @@ module.exports = {
     // logo: 'https://vuejs.org/images/logo.png',
     navbar: [
       {
+        text: 'Validation',
+        children: [
+          {
+            text: 'Methods',
+            link: '/validation/methods.md',
+          },
+        ],
+      },
+  
+      {
         text: 'Validators',
         children: [
           {
