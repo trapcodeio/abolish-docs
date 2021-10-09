@@ -9,6 +9,13 @@ module.exports = {
   },
   
   head: [
+    // [
+    //   'link',
+    //   {
+    //     rel: 'canonical',
+    //     href: 'https://abolish.trapcode.io'
+    //   },
+    // ],
     [
       'link',
       {
@@ -30,7 +37,7 @@ module.exports = {
           },
         ],
       },
-  
+      
       {
         text: 'Validators',
         children: [
