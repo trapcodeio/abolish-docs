@@ -35,8 +35,6 @@ import {Abolish} from "abolish";
 
 ## Basic Example
 
-The example below shows how to use Abolish to **validate** a variable using out of the box validators `typeof` & `min`
-
 | Methods | Description |
 | ------ | ----------- |
 | **`attempt`** | Validate variable, Throw error when validation fails. |
