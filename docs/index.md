@@ -37,6 +37,17 @@ import {Abolish} from "abolish";
 
 The example below shows how to use Abolish to **validate** a variable using out of the box validators `typeof` & `min`
 
+| Methods | Description |
+| ------ | ----------- |
+| **`attempt`** | Validate variable, Throw error when validation fails. |
+| **`check`** | Validate variable but use **Go Lang** error handling style. No Error thrown. |
+| **`validate`** | Validate **objects** and use **Go Lang** error handling style. No Error thrown. |
+
+<br>
+
+<CodeGroup>
+  <CodeGroupItem title="attempt">
+
 ```javascript
 const {Abolish} = require("abolish")
 const age = 17;
@@ -48,6 +59,49 @@ try {
   // Variable is too small. (Min. 18)
 }
 ```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="check" >
+
+```javascript
+const {Abolish} = require("abolish");
+
+const [err, age] = Abolish.check(17, "typeof:number|min:18");
+
+if (err) {
+  console.log(e.message)
+  // Error: Variable is too small. (Min. 18)
+}
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="validate">
+
+```javascript
+const {Abolish} = require("abolish");
+
+const data = {
+  name: 'John Doe',
+  password: 'password',
+  age: 17
+}
+
+const [err, validated] = Abolish.validate(data, {
+  name: 'typeof:string|minLength:2|maxLength:30',
+  password: 'typeof:string|minLength:10|maxLength:250',
+  age: 'typeof:number|min:18',
+});
+
+if (err) {
+  console.log(e.message)
+  // Error: Password is too short. (Min. 10 characters)
+}
+```
+
+  </CodeGroupItem>
+</CodeGroup>
 
 Validation rules can also be written as follows:
 
@@ -122,7 +176,6 @@ Abolish.addGlobalValidator({
 })
 ```
 
-
 We can run the async `EmailBelongsToUser` validator like so.
 
 ```javascript
@@ -130,6 +183,6 @@ await Abolish.attemptAsync('admin@example.com', 'EmailBelongsToUser')
 // if it passes 
 "admin@example.com" // will be returned
 // Else Error will be thrown.
-`Email "admin@example.com" does not belong to user.`
+    `Email "admin@example.com" does not belong to user.`
 ```
 
