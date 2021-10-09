@@ -42,6 +42,10 @@ module.exports = {
         text: 'Validators',
         children: [
           {
+            text: 'Create Validator',
+            link: '/validators/create.md',
+          },
+          {
             text: 'Default Validators',
             link: '/validators/default.md',
           },
