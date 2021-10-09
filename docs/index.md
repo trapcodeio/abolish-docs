@@ -105,11 +105,11 @@ Validation rules can also be written as follows:
 
 ```javascript
 // String
-Abolish.attempt(age, "typeof:number|min:18")
+Abolish.attempt(variable, "typeof:number|min:18");
 // Object
-Abolish.attempt(age, {typeof: "number", min: 18})
+Abolish.attempt(variable, {typeof: "number", min: 18});
 // Or Array of Strings or Objects
-Abolish.attempt(age, ["typeof:number", {min: 18}])
+Abolish.attempt(variable, ["typeof:number", {min: 18}]);
 ```
 
 ## How it Works?
@@ -177,10 +177,10 @@ Abolish.addGlobalValidator({
 We can run the async `EmailBelongsToUser` validator like so.
 
 ```javascript
-await Abolish.attemptAsync('admin@example.com', 'EmailBelongsToUser')
+await Abolish.attemptAsync('admin@example.com', 'EmailBelongsToUser');
 // if it passes 
-"admin@example.com" // will be returned
+"admin@example.com"; // will be returned
 // Else Error will be thrown.
-    `Email "admin@example.com" does not belong to user.`
+`Email "admin@example.com" does not belong to user.`
 ```
 

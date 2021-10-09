@@ -102,6 +102,7 @@ Abolish.attempt('This is a sentence', 'maxLength:10');
 ```
 
 ### $inline
+
 ###### Note: Validators starting with `$` are considered special validators.
 
 The $inline validator provides a way to validate without pre-defining a validator.
@@ -114,7 +115,7 @@ Abolish.attempt(value, {$inline: () => boolean | error})
 Abolish.attempt('mail.example.com', {
   $inline: (value) => {
     // validate email adddress
-    if(!value.includes('@')){
+    if (!value.includes('@')) {
       throw new Error('Invalid email address')
     }
   }
