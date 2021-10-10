@@ -131,13 +131,12 @@ Process Cycle:
 
 - Parse rules if not an object.
 - Reads the rules object.
-- Loops through the keys accordingly.
-- Finds the corresponding validator using the key.
-- Run the validator function, using the value of the rule as the 2nd validator argument.
+- Finds the corresponding validators using rules object keys.
+- Run the validator functions.
 
 ### Sync Example
 
-Let's add a validator function that checks if a file exists.
+A validator function that checks if a file exists.
 
 ```javascript
 Abolish.addGlobalValidator({
@@ -159,7 +158,7 @@ Abolish.attempt('/path/to/file.png', 'FileExists')
 
 ### Async Example.
 
-Let's add an async validator function that checks an imaginary database if email belongs to a user.
+An async validator function that checks if an email belongs to a user.
 
 ```javascript
 Abolish.addGlobalValidator({
