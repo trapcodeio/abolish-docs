@@ -35,6 +35,10 @@ module.exports = {
             text: 'Methods',
             link: '/validation/methods.md',
           },
+          {
+            text: 'Rules',
+            link: '/validation/rules.md',
+          },
         ],
       },
       
