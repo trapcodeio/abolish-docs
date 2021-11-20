@@ -11,7 +11,7 @@ variables.
 
 Unlike other validation libraries, Abolish is more focused on **custom validations**.
 
-You can create your own validation library using abolish and use them in as many projects as you like.
+You can create your own validation library with abolish and use them in as many projects as you like.
 
 **You validate your data just the way you understand them.**
 
@@ -39,6 +39,7 @@ import {Abolish} from "abolish";
 | ------ | ----------- |
 | **`attempt`** | Validate variable, Throw error when validation fails. |
 | **`check`** | Validate variable but use **Go Lang** error handling style. No Error thrown. |
+| **`test`** | Validate variable, return boolean. `true` for pass and `false` for fail |
 | **`validate`** | Validate **objects** and use **Go Lang** error handling style. No Error thrown. |
 
 <br>
@@ -70,6 +71,21 @@ const [err, age] = Abolish.check(17, "typeof:number|min:18");
 if (err) {
   console.log(e.message)
   // Error: Variable is too small. (Min. 18)
+}
+```
+
+  </CodeGroupItem>
+
+
+ <CodeGroupItem title="test" >
+
+```javascript
+const {Abolish} = require("abolish");
+
+const validAge = Abolish.test(17, "typeof:number|min:18") // `false`
+
+if (!validAge) {
+  // do something...
 }
 ```
 

@@ -6,14 +6,15 @@ Abolish provides 3 validation Methods: `attempt, check & validate`
 | ------ | ----------- |
 | **`validate, validateAsync`** | Validate **objects**.  **Go Lang** error handling style. No Error thrown. |
 | **`attempt, attemptAsync`** | Validate variable, Throw error when validation fails. |
+| **`test, testAsync`** | Validate variable, return boolean. `true` for pass and `false` for fail. |
 | **`check, checkAsync`** | Validate variable but use **Go Lang** error handling style. No Error thrown. |
 
 <br>
 
 ## validate
 
-The validate method is for validating objects. unlike other methods (attempt & check), it takes an Object
-of `{key: rules}` structure as rules.
+The validate method is for validating objects. unlike other methods, 
+<br>it takes an Object  of `{key: rules}` structure as rules.
 
 
 <CodeGroup>
@@ -24,7 +25,6 @@ const data = {
   email: 'mail@example.com',
   password: undefined,
   referrer: 'john'
-
 };
 
 const [err, validated] = Abolish.validate(data, {
@@ -139,6 +139,6 @@ Abolish.validate(object, {
 });
 ```
 
-### validateAsync
+## validateAsync
 
 The async method for [#validate](#validate)
