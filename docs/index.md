@@ -16,6 +16,7 @@ You can create your own validation library with abolish and use them in as many 
 **You validate your data just the way you understand them.**
 
 ## Installation
+
 Abolish can be used directly in browsers or in node.js via package managers or bundlers.
 
 ### Package Managers
@@ -28,28 +29,29 @@ npm install abolish
 yarn add abolish
 ```
 
-After Installation, you can **require** or **import**  Abolish class like so:
+After Installation, you can **require** or **import** Abolish class like so:
 
 ```javascript
-const {Abolish} = require("abolish");
-// OR 
-import {Abolish} from "abolish";
+const { Abolish } = require("abolish");
+// OR
+import { Abolish } from "abolish";
 ```
 
 ### Browser Setup
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/abolish/browser.min.js"></script>
 
 <!-- Usage -->
 <script>
-const {Abolish} = AbolishBrowser; // as window.AbolishBrowser
+    const { Abolish } = AbolishBrowser; // as window.AbolishBrowser
 </script>
 ```
 
 ## Basic Example
 
 | Methods        | Description                                                                     |
-|----------------|---------------------------------------------------------------------------------|
+| -------------- | ------------------------------------------------------------------------------- |
 | **`attempt`**  | Validate variable, Throw error when validation fails.                           |
 | **`check`**    | Validate variable but use **Go Lang** error handling style. No Error thrown.    |
 | **`test`**     | Validate variable, return boolean. `true` for pass and `false` for fail         |
@@ -61,14 +63,14 @@ const {Abolish} = AbolishBrowser; // as window.AbolishBrowser
   <CodeGroupItem title="attempt">
 
 ```javascript
-const {Abolish} = require("abolish")
+const { Abolish } = require("abolish");
 const age = 17;
 
 try {
-  Abolish.attempt(age, "typeof:number|min:18")
+    Abolish.attempt(age, "typeof:number|min:18");
 } catch (e) {
-  console.log(e.message)
-  // Variable is too small. (Min. 18)
+    console.log(e.message);
+    // Variable is too small. (Min. 18)
 }
 ```
 
@@ -77,28 +79,27 @@ try {
   <CodeGroupItem title="check" >
 
 ```javascript
-const {Abolish} = require("abolish");
+const { Abolish } = require("abolish");
 
 const [err, age] = Abolish.check(17, "typeof:number|min:18");
 
 if (err) {
-  console.log(e.message)
-  // Error: Variable is too small. (Min. 18)
+    console.log(e.message);
+    // Error: Variable is too small. (Min. 18)
 }
 ```
 
   </CodeGroupItem>
 
-
  <CodeGroupItem title="test" >
 
 ```javascript
-const {Abolish} = require("abolish");
+const { Abolish } = require("abolish");
 
-const validAge = Abolish.test(17, "typeof:number|min:18") // `false`
+const validAge = Abolish.test(17, "typeof:number|min:18"); // `false`
 
 if (!validAge) {
-  // do something...
+    // do something...
 }
 ```
 
@@ -107,23 +108,23 @@ if (!validAge) {
   <CodeGroupItem title="validate">
 
 ```javascript
-const {Abolish} = require("abolish");
+const { Abolish } = require("abolish");
 
 const data = {
-  name: 'John Doe',
-  password: 'password',
-  age: 17
-}
+    name: "John Doe",
+    password: "password",
+    age: 17
+};
 
 const [err, validated] = Abolish.validate(data, {
-  name: 'typeof:string|minLength:2|maxLength:30',
-  password: 'typeof:string|minLength:10|maxLength:250',
-  age: 'typeof:number|min:18',
+    name: "typeof:string|minLength:2|maxLength:30",
+    password: "typeof:string|minLength:10|maxLength:250",
+    age: "typeof:number|min:18"
 });
 
 if (err) {
-  console.log(e.message)
-  // Error: Password is too short. (Min. 10 characters)
+    console.log(e.message);
+    // Error: Password is too short. (Min. 10 characters)
 }
 ```
 
@@ -136,9 +137,9 @@ Validation rules can also be written as follows:
 // String
 Abolish.attempt(variable, "typeof:number|min:18");
 // Object
-Abolish.attempt(variable, {typeof: "number", min: 18});
+Abolish.attempt(variable, { typeof: "number", min: 18 });
 // Or Array of Strings or Objects
-Abolish.attempt(variable, ["typeof:number", {min: 18}]);
+Abolish.attempt(variable, ["typeof:number", { min: 18 }]);
 ```
 
 ## How it Works?
@@ -149,7 +150,7 @@ Basically rules are converted to an object before validation starts. Where the `
 are validator options. For example
 
 ```javascript
-"typeof:number|min:18"
+"typeof:number|min:18";
 // Is converted to.
 // {typeof: "number", min: 18}
 ```
@@ -158,10 +159,10 @@ are validator options. For example
 
 Process Cycle:
 
-- Parse rules if not an object.
-- Reads the rules object.
-- Finds the corresponding validators using rules object keys.
-- Run the validator functions.
+-   Parse rules if not an object.
+-   Reads the rules object.
+-   Finds the corresponding validators using rules object keys.
+-   Run the validator functions.
 
 ### Sync Example
 
@@ -169,20 +170,20 @@ A validator function that checks if a file exists.
 
 ```javascript
 Abolish.addGlobalValidator({
-  name: 'FileExists', // Case Sensitive.
-  error: `File does not exist!`,
-  validator: (file) => fs.existsSync(file),
-})
+    name: "FileExists", // Case Sensitive.
+    error: `File does not exist!`,
+    validator: (file) => fs.existsSync(file)
+});
 ```
 
 We can run the `FileExists` validator like so.
 
 ```javascript
-Abolish.attempt('/path/to/file.png', 'FileExists')
-// if it passes 
-"/path/to/file.png" // will be returned
+Abolish.attempt("/path/to/file.png", "FileExists");
+// if it passes
+("/path/to/file.png"); // will be returned
 // Else Error will be thrown.
-"File does not exist!"
+("File does not exist!");
 ```
 
 ### Async Example.
@@ -191,24 +192,23 @@ An async validator function that checks if an email belongs to a user.
 
 ```javascript
 Abolish.addGlobalValidator({
-  isAsync: true, // Must set for async validators
-  name: 'EmailBelongsToUser',
-  validator: async (email) => {
-    const user = await UserModel.findByEmail(email);
-    if (!user) {
-      throw new Error(`Email "${email}" does not belong to user.`)
+    isAsync: true, // Must set for async validators
+    name: "EmailBelongsToUser",
+    validator: async (email) => {
+        const user = await UserModel.findByEmail(email);
+        if (!user) {
+            throw new Error(`Email "${email}" does not belong to user.`);
+        }
     }
-  }
-})
+});
 ```
 
 We can run the async `EmailBelongsToUser` validator like so.
 
 ```javascript
-await Abolish.attemptAsync('admin@example.com', 'EmailBelongsToUser');
-// if it passes 
-"admin@example.com"; // will be returned
+await Abolish.attemptAsync("admin@example.com", "EmailBelongsToUser");
+// if it passes
+("admin@example.com"); // will be returned
 // Else Error will be thrown.
-`Email "admin@example.com" does not belong to user.`
+`Email "admin@example.com" does not belong to user.`;
 ```
-
