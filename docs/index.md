@@ -1,3 +1,8 @@
+---
+prev: false
+next: /validation/methods.md
+---
+
 # Abolish Validator
 
 [Github](https://github.com/trapcodeio/abolish)

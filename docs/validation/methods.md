@@ -1,3 +1,10 @@
+---
+prev:
+    text: Installation
+    link: /index.html
+next: ./rules.md
+---
+
 # Validation Methods
 
 Abolish provides **4** validation Methods: `validate, attempt, check, test`. All with async support.
