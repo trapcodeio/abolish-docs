@@ -1,3 +1,8 @@
+---
+prev: /validation/rules.md
+next: ./create.md
+---
+
 # Default Validators
 
 Because Abolish is meant for **Custom validations** only **11 default validators** are available out of the box.
