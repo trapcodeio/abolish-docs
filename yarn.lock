@@ -418,10 +418,10 @@
   dependencies:
     vue-demi "*"
 
-abolish@^4.8.6:
-  version "4.8.6"
-  resolved "https://registry.yarnpkg.com/abolish/-/abolish-4.8.6.tgz#4298edebb2a221cd4eefa559c638441732cbbdb6"
-  integrity sha512-XrX8mz38Ct09VYAoEPw2VWzmmwge55ZgFyj4EKRMqS2yqC3vzmdfpxPip08ToCDJpvdjMNtwR98Xtf3u/6830w==
+abolish@^4.8.7:
+  version "4.8.7"
+  resolved "https://registry.yarnpkg.com/abolish/-/abolish-4.8.7.tgz#886b9978849fdadca43b0f0b1eb3a0abc0aa1ff1"
+  integrity sha512-rDV8XsHGBSl8A+KrMpTDQTzGANnhtsMBGtkh7k0XYiK8M/x1BTqkgbnDUCwc43SBN8y3ElGcnBtrSZO4QVLuiw==
   dependencies:
     lodash "^4.17.21"
 
