@@ -1,36 +1,35 @@
 # Validation Methods
 
-Abolish provides 3 validation Methods: `attempt, check & validate`
+Abolish provides **4** validation Methods: `validate, attempt, check, test`. All with async support.
 
 | Method                        | Description                                                                  |
-|-------------------------------|------------------------------------------------------------------------------|
-| **`validate, validateAsync`** | Validate **objects**.  **Go Lang** error handling style. No Error thrown.    |
+| ----------------------------- | ---------------------------------------------------------------------------- |
+| **`validate, validateAsync`** | Validate **objects**. **Go Lang** error handling style. No Error thrown.     |
 | **`attempt, attemptAsync`**   | Validate variable, Throw error when validation fails.                        |
-| **`test, testAsync`**         | Validate variable, return boolean. `true` for pass and `false` for fail.     |
 | **`check, checkAsync`**       | Validate variable but use **Go Lang** error handling style. No Error thrown. |
+| **`test, testAsync`**         | Validate variable, return boolean. `true` for pass and `false` for fail.     |
 
 <br>
 
 ## validate
 
-The validate method is for validating objects. unlike other methods, 
-<br>it takes an Object  of `{key: rules}` structure as rules.
-
+The validate method is for validating objects. unlike other methods,
+<br>it takes an Object of `{key: rules}` structure as rules.
 
 <CodeGroup>
   <CodeGroupItem title="Code">
 
 ```javascript
 const data = {
-  email: 'mail@example.com',
-  password: undefined,
-  referrer: 'john'
+    email: "mail@example.com",
+    password: undefined,
+    referrer: "john"
 };
 
 const [err, validated] = Abolish.validate(data, {
-  email: 'required|typeof:string',
-  password: 'required|typeof:string',
-})
+    email: "required|typeof:string",
+    password: "required|typeof:string"
+});
 
 console.log([err, validated]);
 ```
@@ -42,16 +41,16 @@ console.log([err, validated]);
 ```javascript
 // WILL LOG
 [
-  // The error object
-  {
-    key: 'password',
-    type: 'validator',
-    validator: 'required',
-    message: 'Password is required.',
-    data: null
-  },
-  {} // validated will be empty when error.
-]
+    // The error object
+    {
+        key: "password",
+        type: "validator",
+        validator: "required",
+        message: "Password is required.",
+        data: null
+    },
+    {} // validated will be empty when error.
+];
 ```
 
   </CodeGroupItem>
@@ -62,11 +61,11 @@ console.log([err, validated]);
 // Assuming password is `password2020` not `undefined`
 // WILL LOG
 [
-  // error is false
-  false,
-  // only validated keys 
-  {email: 'mail@example.com', password: 'password2020'}
-]
+    // error is false
+    false,
+    // only validated keys
+    { email: "mail@example.com", password: "password2020" }
+];
 ```
 
   </CodeGroupItem>
@@ -82,30 +81,30 @@ in the validated object like so:
 
 ```javascript
 const data = {
-  email: 'mail@example.com',
-  password: 'password',
-  referrer: 'john'
+    email: "mail@example.com",
+    password: "password",
+    referrer: "john"
 };
 
 const [err, validated] = Abolish.validate(data, {
-  email: 'required|typeof:string',
-  password: 'required|typeof:string',
-  $include: ['referrer']
-})
+    email: "required|typeof:string",
+    password: "required|typeof:string",
+    $include: ["referrer"]
+});
 
 console.log([err, validated]);
 
 // WILL LOG
 [
-  // error is false
-  false,
-  // `referrer` is included.
-  {
-    email: 'mail@example.com',
-    password: 'password',
-    referrer: 'john'
-  }
-]
+    // error is false
+    false,
+    // `referrer` is included.
+    {
+        email: "mail@example.com",
+        password: "password",
+        referrer: "john"
+    }
+];
 ```
 
 ### Wildcard
@@ -114,31 +113,111 @@ The Wildcard rule can be used to define rules that will apply to all keys define
 
 ```javascript
 Abolish.validate(object, {
-  "*": "required|typeof:string",
-  email: true,
-  password: true,
+    "*": "required|typeof:string",
+    email: true,
+    password: true
 });
 
 // will be converted to
 Abolish.validate(object, {
-  email: "required|typeof:string",
-  password: "required|typeof:string",
+    email: "required|typeof:string",
+    password: "required|typeof:string"
 });
 
 // With extra validators
 Abolish.validate(object, {
-  "*": "required|typeof:string",
-  email: "email",
-  password: "minLength:6",
+    "*": "required|typeof:string",
+    email: "email",
+    password: "minLength:6"
 });
 
 // will be converted to
 Abolish.validate(object, {
-  email: "required|typeof:string|email",
-  password: "required|typeof:string|minLength:6",
+    email: "required|typeof:string|email",
+    password: "required|typeof:string|minLength:6"
 });
 ```
 
-## validateAsync
+### Child Object Value
+
+To validate a child object value, you should use the `object` validator.
+
+See: [`object`](../validators/default.md#object) Validator Rule
+
+### validateAsync
 
 The async method for [#validate](#validate)
+
+## attempt
+
+The attempt method is for validating **variables**. it throws an error when validation fails and returns the validated value on success.
+
+it takes the syntax of `validate(variable, rules);`
+
+```javascript
+const bool = Abolish.attempt(0, "boolean"); // pass
+// bool === false
+const number = Abolish.attempt("1234", "number"); // pass
+// number === 1234
+
+const age = Abolish.attempt(12, "min:18"); // fail
+// Throw Error: Variable is too small. (Min. 18)
+```
+
+### attemptAsync
+
+The async method for [#attempt](#attempt)
+
+## check
+
+Check is for validating **variables** but unlike attempt does not throw an error. It returns a **Go Lang** error typeof syntax like [validate](#validate)
+
+<CodeGroup>
+  <CodeGroupItem title="Fail">
+  
+```javascript
+const [error, age] = Abolish.check(12, "min:18");
+
+// error === {
+// key: 'variable',
+// type: 'validator',
+// validator: 'min',
+// message: 'Variable is too small. (Min. 18)',
+// data: null
+// },
+
+// age === undefined
+
+````
+
+   </CodeGroupItem>
+
+   <CodeGroupItem title="Pass">
+
+```javascript
+const [error, age] = Abolish.check(28, "min:18");
+// error === false
+// age === 28
+````
+
+   </CodeGroupItem>
+
+</CodeGroup>
+
+### checkAsync
+
+The async method for [#check](#check)
+
+## test
+
+The test method does not throw an exception or return an error. It returns a boolean value. If the validation fails, it returns false else true.
+
+```javascript
+Abolish.test(12, "min:18"); // false
+Abolish.test("My Name", "minLength:3|maxLength:20"); // true
+Abolish.test([], "typeof:array"); // true
+```
+
+### testAsync
+
+The async method for [#test](#test)
