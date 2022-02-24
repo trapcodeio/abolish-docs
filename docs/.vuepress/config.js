@@ -55,6 +55,11 @@ module.exports = {
           },
         ],
       },
+      
+      {
+        text: 'PLAYGROUND',
+        link: 'https://abolish-playground.trapcode.io',
+      },
     ],
   },
 };

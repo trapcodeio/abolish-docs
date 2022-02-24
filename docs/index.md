@@ -16,6 +16,9 @@ You can create your own validation library with abolish and use them in as many 
 **You validate your data just the way you understand them.**
 
 ## Installation
+Abolish can be used directly in browsers or in node.js via package managers or bundlers.
+
+### Package Managers
 
 Using **npm** OR **yarn**
 
@@ -33,13 +36,23 @@ const {Abolish} = require("abolish");
 import {Abolish} from "abolish";
 ```
 
+### Browser Installation
+```html
+<script src="https://cdn.jsdelivr.net/npm/abolish/browser.min.js"></script>
+
+<!-- Usage -->
+<script>
+const {Abolish} = AbolishBrowser; // as window.AbolishBrowser
+</script>
+```
+
 ## Basic Example
 
-| Methods | Description |
-| ------ | ----------- |
-| **`attempt`** | Validate variable, Throw error when validation fails. |
-| **`check`** | Validate variable but use **Go Lang** error handling style. No Error thrown. |
-| **`test`** | Validate variable, return boolean. `true` for pass and `false` for fail |
+| Methods        | Description                                                                     |
+|----------------|---------------------------------------------------------------------------------|
+| **`attempt`**  | Validate variable, Throw error when validation fails.                           |
+| **`check`**    | Validate variable but use **Go Lang** error handling style. No Error thrown.    |
+| **`test`**     | Validate variable, return boolean. `true` for pass and `false` for fail         |
 | **`validate`** | Validate **objects** and use **Go Lang** error handling style. No Error thrown. |
 
 <br>

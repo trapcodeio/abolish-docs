@@ -5,13 +5,13 @@
   "main": "index.md",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "vuepress dev docs",
+    "docs:dev": "vuepress dev docs --port 8111",
     "docs:build": "vuepress build docs",
     "test": "nodemon test.js"
   },
   "devDependencies": {
-    "abolish": "^4.6.1",
-    "vuepress-vite": "^2.0.0-beta.26"
+    "abolish": "^4.8.3",
+    "vuepress-vite": "^2.0.0-beta.35"
   },
   "dependencies": {}
 }

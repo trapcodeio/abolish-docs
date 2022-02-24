@@ -2,12 +2,12 @@
 
 Abolish provides 3 validation Methods: `attempt, check & validate`
 
-| Method | Description |
-| ------ | ----------- |
-| **`validate, validateAsync`** | Validate **objects**.  **Go Lang** error handling style. No Error thrown. |
-| **`attempt, attemptAsync`** | Validate variable, Throw error when validation fails. |
-| **`test, testAsync`** | Validate variable, return boolean. `true` for pass and `false` for fail. |
-| **`check, checkAsync`** | Validate variable but use **Go Lang** error handling style. No Error thrown. |
+| Method                        | Description                                                                  |
+|-------------------------------|------------------------------------------------------------------------------|
+| **`validate, validateAsync`** | Validate **objects**.  **Go Lang** error handling style. No Error thrown.    |
+| **`attempt, attemptAsync`**   | Validate variable, Throw error when validation fails.                        |
+| **`test, testAsync`**         | Validate variable, return boolean. `true` for pass and `false` for fail.     |
+| **`check, checkAsync`**       | Validate variable but use **Go Lang** error handling style. No Error thrown. |
 
 <br>
 
