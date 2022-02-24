@@ -2,12 +2,24 @@
 
 Abolish also provides additional validators that can be registered and used to validate, but not added to the global scope.
 
-## List
+## Menu
 
 -   String
     -   [alphaNumeric](#alphanumeric)
     -   [boolean](#boolean)
+    -   [date](#date)
+    -   [email](#email)
+    -   [ipAddress](#ipaddress)
+    -   [json](#json)
+    -   [jsonDecode](#jsondecode)
+    -   [jsonEncode](#jsonencode)
+    -   [md5](#md5)
+    -   [number](#number)
+    -   [regex](#regex)
+    -   [string](#string)
+    -   [url](#url)
 -   Array
+    -   [any](#any)
 
 ## String Validators
 
@@ -164,4 +176,53 @@ Abolish.test("hello", { regex: /^hello$/ }); // => true
 Abolish.test("hello", { regex: /^hello$/i }); // => false
 ```
 
+### string
+
+Check if the value is a string.
+
+```javascript
+Abolish.test(1, "string"); // => false
+Abolish.test("hello", "string"); // => true
+```
+
+The `string` validator also supports the `trim, toLowerCase` and any other method that is available on javascript `String` that does not require arguments. For example:
+
+```javascript
+const str = Abolish.attempt("  Hello  ", "string:trim|string:toLowerCase");
+// is equivalent to
+" Hello ".trim().toLowerCase();
+// Result: str === "hello"
+
+// Can also be written as
+const str = Abolish.attempt("  Hello  ", "string:trim,toLowerCase"); // chain method
+
+// Any `String` method that does not require arguments can be chained
+const str = Abolish.attempt("Cat", "string:trim,toLowerCase,bold,big");
+// is equivalent to
+"Cat".trim().toLowerCase().bold().big();
+
+// Result: str === "<big><b>Cat</b></big>"
+```
+
+### url
+
+Check if the value is a valid URL.
+
+```javascript
+Abolish.test("hello", "url"); // => false
+Abolish.test("https://google.com", "url"); // => true
+```
+
 ## Array Validators
+
+### any
+
+Check if the value is an array.
+
+```javascript
+const role = "user";
+Abolish.test(role, { any: ["staff", "admin"] }); // => false
+Abolish.test(role, { any: ["user", "subscriber"] }); // => true
+```
+
+Note: Maybe renamed/aliased to `inArray` in the future.

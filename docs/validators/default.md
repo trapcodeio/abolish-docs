@@ -2,6 +2,22 @@
 
 Because Abolish is meant for **Custom validations** only **11 default validators** are available out of the box.
 
+### Menu
+
+-   [default](#default)
+-   [exact](#exact)
+-   [max](#max)
+-   [maxLength](#maxlength)
+-   [min](#min)
+-   [minLength](#minlength)
+-   [object](#object)
+-   [required](#required)
+-   [type](#type)
+-   [typeof](#typeof)
+-   [$inline](#inline)
+
+## Validators
+
 ### default
 
 Set the default value for the field if undefined or null.
