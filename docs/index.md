@@ -36,7 +36,7 @@ const {Abolish} = require("abolish");
 import {Abolish} from "abolish";
 ```
 
-### Browser Installation
+### Browser Setup
 ```html
 <script src="https://cdn.jsdelivr.net/npm/abolish/browser.min.js"></script>
 
