@@ -418,10 +418,10 @@
   dependencies:
     vue-demi "*"
 
-abolish@^4.8.3:
-  version "4.8.3"
-  resolved "https://registry.yarnpkg.com/abolish/-/abolish-4.8.3.tgz#7d8ec929fe5e315380a2ca74a165f31d2fa128bd"
-  integrity sha512-/j1UH9veYWvPbDnvyQGihomntbsqjRSJprS2iOtnp8JY/0oqJb1t9IEE3W9sxWqjb8MIJ+fT7n/K+po0HuZLuQ==
+abolish@^4.8.6:
+  version "4.8.6"
+  resolved "https://registry.yarnpkg.com/abolish/-/abolish-4.8.6.tgz#4298edebb2a221cd4eefa559c638441732cbbdb6"
+  integrity sha512-XrX8mz38Ct09VYAoEPw2VWzmmwge55ZgFyj4EKRMqS2yqC3vzmdfpxPip08ToCDJpvdjMNtwR98Xtf3u/6830w==
   dependencies:
     lodash "^4.17.21"
 
@@ -1358,6 +1358,11 @@ postcss@^8.4.5, postcss@^8.4.6:
     nanoid "^3.2.0"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
+
+prettier@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.5.1.tgz#fff75fa9d519c54cf0fce328c1017d94546bc56a"
+  integrity sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==
 
 prismjs@^1.26.0:
   version "1.27.0"

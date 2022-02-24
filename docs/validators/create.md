@@ -1,7 +1,5 @@
 # Custom Validators
 
-[comment]: <> (Creating custom **reusable** validators is easy with abolish.)
-
 Abolish provides **two** validator spaces: **Global** and **Standalone**
 
 A Global validator is available to all abolish instances, while a standalone validator is available to the instance it

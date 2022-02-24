@@ -1,6 +1,28 @@
 # Default Validators
 
-Because Abolish is meant for **Custom validations** only **8 default validators** are available out of the box.
+Because Abolish is meant for **Custom validations** only **13 default validators** are available out of the box.
+
+### default
+Set the default value for the field if undefined or null.
+```javascript
+const firstName = Abolish.attempt(undefined, {default: 'Joe'})
+// name === 'Joe'
+const lastName = Abolish.attempt('Sam', {default: 'Doe'})
+// name === 'Sam'
+```
+
+### exact
+
+Checks if value **(string, number or boolean)** is exactly equal to the option given.
+
+```javascript
+Abolish.attempt(10, 'exact:10');
+// Pass
+
+Abolish.attempt('john', 'exact:joe');
+// Error: Variable failed exact validator
+```
+
 
 ### required
 
@@ -31,18 +53,6 @@ Abolish.attempt(10, 'typeof:number');
 
 Abolish.attempt('string', 'typeof:array');
 // Error: Variable is not typeOf array
-```
-
-### exact
-
-Checks if value **(string, number or boolean)** is exactly equal to the option given.
-
-```javascript
-Abolish.attempt(10, 'exact:10');
-// Pass
-
-Abolish.attempt('john', 'exact:joe');
-// Error: Variable failed exact validator
 ```
 
 ### min
