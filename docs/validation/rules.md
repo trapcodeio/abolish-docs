@@ -136,3 +136,42 @@ Abolish.attempt("not a number", [
 ]);
 // Error: Please enter a number.
 ```
+
+### $skip
+
+The `$skip` rule is used to skip validation for a specific field or variable. it accepts a `boolean` or a `function(value?) => boolean`.
+if true, the field will be skipped.
+
+```javascript
+let skipMobile = true;
+
+const rules = {
+    mobile: {
+        $skip: skipMobile,
+        someMobileValidator: true
+    },
+    username: "required"
+};
+
+// mobile will not be validated because `$skip` is true
+// `$skip` can also accept a function that returns a boolean
+// The current value its validating will be passed to that function also
+
+skipMobile = (mobile) => {
+    // skip if mobile is empty else run validation.
+    return !mobile.length;
+};
+
+// mobile will be validated because :skip function returned false
+```
+
+`$skip` also works when using `attempt`, `check` or `test` validation methods.
+
+```javascript
+const skipRule = { $skip: (name) => name === "admin" };
+
+// Attempt
+const username = Abolish.attempt("admin", [skipRule, "required|minLength:5"]);
+// Validation skipped
+// username === undefined
+```
