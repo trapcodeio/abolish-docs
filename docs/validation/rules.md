@@ -117,6 +117,7 @@ Abolish.attempt(18, [
     "typeof:number|max:5", 
     { $error: "You are just too old for this." }
 ]);
+// Error: You are just too old for this.
 ```
 
 ### $errors
@@ -145,13 +146,13 @@ if true, the field will be skipped.
 ```javascript
 let skipMobile = true;
 
-const rules = {
+Abolish.validate(data, {
     mobile: {
         $skip: skipMobile,
         someMobileValidator: true
     },
     username: "required"
-};
+});
 
 // mobile will not be validated because `$skip` is true
 // `$skip` can also accept a function that returns a boolean
@@ -168,10 +169,34 @@ skipMobile = (mobile) => {
 `$skip` also works when using `attempt`, `check` or `test` validation methods.
 
 ```javascript
-const skipRule = { $skip: (name) => name === "admin" };
-
 // Attempt
-const username = Abolish.attempt("admin", [skipRule, "required|minLength:5"]);
-// Validation skipped
-// username === undefined
+const comment = Abolish.attempt(rawComment, [
+    // skip validation if admin
+    { $skip: authUser === "admin" },
+    "checkForSpam"
+]);
+// Validation will be skipped if `authUser` is `admin`
+// post will be the same as someBlogPost if not modified by any validator.
 ```
+
+### $inline
+
+The `$inline` rule provides a way to validate without pre-defining a validator.
+
+```javascript
+// Syntax
+Abolish.attempt(value, { $inline: () => boolean | error });
+
+// Example
+Abolish.attempt("mail.example.com", {
+    $inline: (value) => {
+        // validate email adddress
+        if (!value.includes("@")) {
+            throw new Error("Invalid email address");
+        }
+    }
+});
+// Error: Invalid email address
+```
+
+### $joi

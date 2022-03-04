@@ -19,7 +19,6 @@ Because Abolish is meant for **Custom validations** only **11 default validators
 -   [required](#required)
 -   [type](#type)
 -   [typeof](#typeof)
--   [$inline](#inline)
 
 ## Validators
 
@@ -174,25 +173,3 @@ Abolish.attempt("string", "typeof:array");
 ### type
 
 Alias for [typeof](#typeof)
-
-### $inline
-
-###### Note: Validators starting with `$` are considered special validators.
-
-The $inline validator provides a way to validate without pre-defining a validator.
-
-```javascript
-// Syntax
-Abolish.attempt(value, { $inline: () => boolean | error });
-
-// Example
-Abolish.attempt("mail.example.com", {
-    $inline: (value) => {
-        // validate email adddress
-        if (!value.includes("@")) {
-            throw new Error("Invalid email address");
-        }
-    }
-});
-// Error: Invalid email address
-```
