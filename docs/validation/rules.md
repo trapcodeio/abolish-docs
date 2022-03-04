@@ -198,5 +198,3 @@ Abolish.attempt("mail.example.com", {
 });
 // Error: Invalid email address
 ```
-
-### $joi
