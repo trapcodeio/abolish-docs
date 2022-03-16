@@ -185,15 +185,20 @@ The `$inline` rule provides a way to validate without pre-defining a validator.
 
 ```javascript
 // Syntax
-Abolish.attempt(value, { $inline: () => boolean | error });
+Abolish.attempt(value, { $inline: (value, { modifier, error }) => boolean | error });
 
 // Example
 Abolish.attempt("mail.example.com", {
-    $inline: (value) => {
+    $inline: (value, { modifier, error }) => {
         // validate email adddress
         if (!value.includes("@")) {
             throw new Error("Invalid email address");
+            // OR
+            return error("Invalid email address");
         }
+
+        // set to lowercase
+        modifier.setThis(value.toLowerCase());
     }
 });
 // Error: Invalid email address

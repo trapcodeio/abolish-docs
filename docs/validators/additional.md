@@ -20,6 +20,8 @@ Abolish also provides additional validators that can be registered and used to v
     -   [url](#url)
 -   Array
     -   [any](#any)
+-   Utils
+    -   [same](#same)
 
 ## String Validators
 
@@ -226,3 +228,25 @@ Abolish.test(role, { any: ["user", "subscriber"] }); // => true
 ```
 
 Note: Maybe renamed/aliased to `inArray` in the future.
+
+## Utility Validators
+
+### same
+
+Check if value is the same as the value of the given key in an object.
+
+```javascript
+const form = {
+    password: "hello",
+    confirmPassword: "hello!"
+};
+
+Abolish.test(form, {
+    object: {
+        password: "required|string",
+        confirmPassword: "required|string|same:password"
+    }
+}); // false
+
+// Error: Confirm Password must be the same as password.
+```
