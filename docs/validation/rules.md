@@ -190,7 +190,7 @@ Abolish.attempt(value, { $inline: (value, { modifier, error }) => boolean | erro
 // Example
 Abolish.attempt("mail.example.com", {
     $inline: (value, { modifier, error }) => {
-        // validate email adddress
+        // validate email address
         if (!value.includes("@")) {
             throw new Error("Invalid email address");
             // OR
@@ -202,4 +202,126 @@ Abolish.attempt("mail.example.com", {
     }
 });
 // Error: Invalid email address
+```
+
+## Helpers
+
+These are syntactic sugar functions to make declaring rules easier.
+
+### Rule()
+
+The `Rule` function is used **parse/combine** rules to an `object
+
+```javascript
+const {Rule} = require("abolish"); // OR import {Rule} from "abolish";
+
+const isEmail = Rule("typeof:string|email");
+// will be converted to:
+{ typeof: "string", email: true }
+
+// Or with custom name and error message
+const isEmail = Rule([
+    "typeof:string|email",
+    { $name: "Email address", $error: "Please enter a valid email address"}
+]);
+
+// will be converted to:
+{
+    typeof: "string",
+    email: true,
+    $name: "Email address",
+    $error: "Please enter a valid email address"
+};
+```
+
+### ParseRules()
+
+The `ParseRules` function is used to parse `key:rule` pairs.
+
+```javascript
+const {ParseRules} = require("abolish"); // OR import {ParseRules} from "abolish";
+
+const rules = ParseRules({
+    name: "required|string",
+    age: "required|typeof:number|min:18|max:100"
+});
+
+// will be converted to:
+{
+  name: { required: true, string: true },
+  age: { required: true, typeof: 'number', min: 18, max: 100 }
+}
+```
+
+### $inline()
+
+The `$inline` is a helper function to create an `$inline` validator rule.
+
+```javascript
+const { $inline } = require("abolish/src/Functions");
+// OR import {$inline} from "abolish/src/Functions";
+
+$inline((value, { modifier, error }) => true);
+// is the same as: (But Typed)
+{
+    $inline: (value, { modifier, error }) => true;
+}
+```
+
+As seen in the example above, the `$inline` function accepts a validator function as its first argument.
+
+It can also accept an error message as its second argument. Note that this error message is used as `$error` property.
+
+Using the same example used in the [$inline](#inline) validator:
+
+```javascript
+// It will be
+Abolish.attempt(
+    "mail.example.com",
+    $inline((value, { modifier, error }) => {
+        // validate email address
+        if (!value.includes("@")) {
+            throw new Error("Invalid email address");
+            // OR
+            return error("Invalid email address");
+        }
+
+        // set to lowercase
+        modifier.setThis(value.toLowerCase());
+    })
+);
+```
+
+### skipIfUndefined()
+
+The `skipIfUndefined` is a helper function to create a `$skip` if `value===undefined` validator rule.
+
+```javascript
+const { skipIfUndefined } = require("abolish/src/Functions");
+// OR import {skipIfUndefined} from "abolish/src/Functions";
+
+skipIfUndefined("number|min:18");
+// will be converted to:
+{
+    $skip: (value) => value === undefined,
+    number: true,
+    min: 18
+}
+```
+
+### skipIfNotDefined()
+
+The `skipIfNotDefined` is a helper function to create a `$skip` if `value===undefined | null` validator rule.
+
+```javascript
+const { skipIfNotDefined } = require("abolish/src/Functions");
+// OR import {skipIfNotDefined} from "abolish/src/Functions";
+
+skipIfNotDefined("number|min:18");
+// will be converted to:
+{
+    $skip: (value) => value === undefined || value === null,
+    number: true,
+    min: 18
+}
 ```

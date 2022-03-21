@@ -65,5 +65,13 @@ module.exports = {
                 link: "https://abolish-playground.trapcode.io"
             }
         ]
-    }
+    },
+    plugins: [
+        [
+            "@vuepress/search",
+            {
+                searchMaxSuggestions: 10
+            }
+        ]
+    ]
 };
