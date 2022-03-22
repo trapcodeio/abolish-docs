@@ -2,6 +2,8 @@ module.exports = {
     // bundler: '@vuepress/bundler-vite',
     lang: "en-US",
     title: "Abolish",
+    // heroText: " ",
+
     description: "A Javascript object validator for custom validations",
 
     markdown: {
@@ -26,7 +28,8 @@ module.exports = {
     ],
 
     themeConfig: {
-        // logo: 'https://vuejs.org/images/logo.png',
+        logo: "/abolish-black.svg",
+        logoDark: "abolish-white.svg",
         navbar: [
             {
                 text: "Validation",
