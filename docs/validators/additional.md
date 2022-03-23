@@ -2,7 +2,7 @@
 
 Abolish also provides additional validators that can be registered and used to validate, but not added to the global scope.
 
-## Menu
+## Validators
 
 -   String
     -   [alphaNumeric](#alphanumeric)
@@ -22,6 +22,68 @@ Abolish also provides additional validators that can be registered and used to v
     -   [any](#any)
 -   Utils
     -   [same](#same)
+
+## File Structure
+
+Validator files exists in the `abolish/validators` folder like so:
+
+```
+📂 string
+  📄 alphaNumeric.js
+  📄 boolean.js
+  📄 ... e.t.c
+  📄 index.js - to require all validators in this folder
+
+📂 array
+  📄 any.js
+  📄 index.js - to require all validators in this folder
+
+📂 e.t.c (As listed above)
+  📄 validator.js
+  📄 index.js - to require all validators in this folder
+```
+
+With the structure above we can import `email, apiAddress` and all `utils` like so
+
+```js
+const { Abolish } = require("abolish");
+
+// Add Email
+Abolish.addGlobalValidator(require("abolish/validators/string/email"));
+// Add Ipaddress
+Abolish.addGlobalValidator(require("abolish/validators/string/ipAddress"));
+
+// Add all in one category
+Abolish.addGlobalValidators(require("abolish/validators/utils"));
+// This will reqiure the `index.js` file.
+```
+
+### registerAllValidators()
+
+If you would like to register/load all validators available, this function is a shorthand for that.
+It takes abolish class as an argument.
+
+```javascript
+const { Abolish } = require("abolish");
+const { registerAllValidators } = require("abolish/src/ValidatorHelpers");
+
+registerAllValidators(Abolish);
+```
+
+This will come handy in server side applications.
+
+### registerValidators()
+
+This function is used to register specific validator categories.
+It takes abolish class as an argument, followed by an array of validator categories.
+
+```javascript
+const { Abolish } = require("abolish");
+const { registerValidators } = require("abolish/src/ValidatorHelpers");
+
+// Register all string validators
+registerValidators(Abolish, "string");
+```
 
 ## String Validators
 
