@@ -66,6 +66,16 @@ module.exports = {
             {
                 text: "PLAYGROUND",
                 link: "https://abolish-playground.trapcode.io"
+            },
+
+            {
+                text: "Built With Abolish",
+                children: [
+                    {
+                        text: "abolish-vue",
+                        link: "https://npmjs.com/package/abolish-vue"
+                    }
+                ]
             }
         ]
     },

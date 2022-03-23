@@ -258,8 +258,8 @@ const rules = ParseRules({
 The `$inline` is a helper function to create an `$inline` validator rule.
 
 ```javascript
-const { $inline } = require("abolish/src/Functions");
-// OR import {$inline} from "abolish/src/Functions";
+const { $inline } = require("abolish/src/helpers");
+// OR import {$inline} from "abolish/src/helpers";
 
 $inline((value, { modifier, error }) => true);
 // is the same as: (But Typed)
@@ -297,8 +297,8 @@ Abolish.attempt(
 The `skipIfUndefined` is a helper function to create a `$skip` if `value===undefined` validator rule.
 
 ```javascript
-const { skipIfUndefined } = require("abolish/src/Functions");
-// OR import {skipIfUndefined} from "abolish/src/Functions";
+const { skipIfUndefined } = require("abolish/src/helpers");
+// OR import {skipIfUndefined} from "abolish/src/helpers";
 
 skipIfUndefined("number|min:18");
 // will be converted to:
@@ -314,8 +314,8 @@ skipIfUndefined("number|min:18");
 The `skipIfNotDefined` is a helper function to create a `$skip` if `value===undefined | null` validator rule.
 
 ```javascript
-const { skipIfNotDefined } = require("abolish/src/Functions");
-// OR import {skipIfNotDefined} from "abolish/src/Functions";
+const { skipIfNotDefined } = require("abolish/src/helpers");
+// OR import {skipIfNotDefined} from "abolish/src/helpers";
 
 skipIfNotDefined("number|min:18");
 // will be converted to:
