@@ -252,13 +252,14 @@ Abolish.test("hello", "string"); // => true
 The `string` validator also supports the `trim, toLowerCase` and any other method that is available on javascript `String` that does not require arguments. For example:
 
 ```javascript
-const str = Abolish.attempt("  Hello  ", "string:trim|string:toLowerCase");
+const str = Abolish.attempt("  Hello  ", "string:trim");
 // is equivalent to
 " Hello ".trim().toLowerCase();
-// Result: str === "hello"
+// Result: str === "Hello"
 
 // Can also be written as
 const str = Abolish.attempt("  Hello  ", "string:trim,toLowerCase"); // chain method
+// Result: str === "hello"
 
 // Any `String` method that does not require arguments can be chained
 const str = Abolish.attempt("Cat", "string:trim,toLowerCase,bold,big");
