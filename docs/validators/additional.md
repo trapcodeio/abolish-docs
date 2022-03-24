@@ -257,8 +257,8 @@ const str = Abolish.attempt("  Hello  ", "string:trim");
 " Hello ".trim().toLowerCase();
 // Result: str === "Hello"
 
-// Can also be written as
-const str = Abolish.attempt("  Hello  ", "string:trim,toLowerCase"); // chain method
+// Using Chain method
+const str = Abolish.attempt("  Hello  ", "string:trim,toLowerCase");
 // Result: str === "hello"
 
 // Any `String` method that does not require arguments can be chained
