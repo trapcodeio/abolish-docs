@@ -236,8 +236,8 @@ Abolish.test("1a", "number"); // => false
 Pass a regular expression to check if the value matches the regular expression.
 
 ```javascript
-Abolish.test("hello", { regex: /^hello$/ }); // => true
-Abolish.test("hello", { regex: /^hello$/i }); // => false
+Abolish.test("Hello", { regex: /^hello$/ }); // => false
+Abolish.test("hello", { regex: /^hello$/i }); // => true
 ```
 
 ### string
