@@ -116,7 +116,7 @@ console.log([err, validated]);
 
 ### Wildcard
 
-The Wildcard rule can be used to define rules that will apply to all keys defined in a rules object.
+The Wildcard rules `*` or `$` can be used to define rules that will apply to all keys defined in a rules object.
 
 ```javascript
 Abolish.validate(object, {
@@ -144,12 +144,6 @@ Abolish.validate(object, {
     password: "required|typeof:string|minLength:6"
 });
 ```
-
-### Child Object Value
-
-To validate a child object value, you should use the `object` validator.
-
-See: [`object`](../validators/default.md#object) Validator Rule
 
 ### validateAsync
 

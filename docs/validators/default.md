@@ -103,7 +103,7 @@ Abolish.attempt("pass", "minLength:6");
 
 ### object
 
-Validate the object using abolish
+Validate an object using abolish rules.
 
 ```javascript
 const data = {
@@ -117,7 +117,7 @@ const data = {
 
 Abolish.attempt(data, {
     name: "required|string",
-    // WRONG!!! Cannot validate address object
+    // ❌ WRONG!!! Cannot validate address object
     // abolish will assume `street`, `city` and `state` are rules.
     address: {
         street: "required|string",
@@ -129,6 +129,7 @@ Abolish.attempt(data, {
 // The right way to validate an object
 Abolish.attempt(data, {
     name: "required|string",
+    // ✅ RIGHT!!! Using object rule syntax
     address: {
         object: {
             street: "required|string",
@@ -138,6 +139,29 @@ Abolish.attempt(data, {
     }
 });
 ```
+
+### objectAsync
+
+Validate an object using abolish async validator.
+
+```javascript
+const address = {
+    street: "123 Main St",
+    cordinates: {
+        lat: "123",
+        lng: "456"
+    }
+};
+
+Abolish.attemptAsync(address, {
+    objectAsync: {
+        // ...
+        cordinates: "An_Async_Cordinates_Validator"
+    }
+});
+```
+
+
 
 ### required
 
@@ -168,6 +192,20 @@ Abolish.attempt(10, "typeof:number");
 
 Abolish.attempt("string", "typeof:array");
 // Error: Variable is not typeOf array
+```
+
+The typeof can also check for multiple types.
+
+```javascript
+// using comma separated string
+Abolish.test(10, "typeof:number,string"); // true
+Abolish.test("string", "typeof:number,string"); // true
+Abolish.test(true, "typeof:number,string"); // false
+
+// using array
+Abolish.test(10, {typeof: ["number", "string"]}); // true
+Abolish.test("string", {typeof: ["number", "string"]}); // true
+Abolish.test(true, {typeof: ["number", "string"]}); // false
 ```
 
 ### type

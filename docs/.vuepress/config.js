@@ -11,13 +11,13 @@ module.exports = {
     },
 
     head: [
-        // [
-        //   'link',
-        //   {
-        //     rel: 'canonical',
-        //     href: 'https://abolish.trapcode.io'
-        //   },
-        // ],
+        [
+          'link',
+          {
+            rel: 'canonical',
+            href: 'https://abolish.trapcode.io'
+          },
+        ],
         [
             "link",
             {

@@ -62,6 +62,7 @@ will be considered as async.
 - `error`: Optional error message for the validator. Abolish will override it if an error is thrown in the validator
   function or if the `helper.error()` method is called
 
+###### Note:
 The `error` message can contain two keywords that will be parsed by abolish when found.
 
 - **:param**  The key of the Object being validated or the name of the variable being validated
@@ -91,7 +92,7 @@ Abolish.addGlobalValidator({
 
 - **1st - val**: The value of the variable being validated.
 - **2nd - opt**: The option passed to the validator in the rules object.
-- **3rd - helpers**: An object containing the `error` and `modifier` helpers
+- **3rd - helpers**: An object containing the `error`, `modifier` & `abolish` helpers
 
 Let's run some validation to see how `MyValidator` turns out.
 
@@ -99,7 +100,7 @@ Let's run some validation to see how `MyValidator` turns out.
 Abolish.attempt('value', 'MyValidator:option');
 
 // will log
-['value', 'option', {error, modifier}]
+['value', 'option', {error, modifier, abolish}]
 
 // And throw
 // Error: Variable failed myValidator
@@ -254,6 +255,7 @@ type AbolishValidatorFunctionResult = boolean | AbolishError | void;
 type AbolishValidatorFunctionHelper = {
     error: (message: string, data?: any) => AbolishError;
     modifier: ObjectModifier;
+    abolish: Abolish;
 };
 
 /**
@@ -268,10 +270,16 @@ type AbolishValidatorFunction = (
 /**
  * Validator structure.
  */
-type AbolishValidator = {
+interface AbolishValidator {
     name: string;
+    description?: string;
     validator: AbolishValidatorFunction;
     error?: string;
-    isAsync?: boolean;
-};
+    isAsync?: true;
+}
+
+interface AbolishAsyncValidator extends Omit<AbolishValidator, "isAsync"> {
+    isAsync: true;
+}
+
 ```
