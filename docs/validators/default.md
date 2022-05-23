@@ -5,7 +5,7 @@ next: ./create.md
 
 # Default Validators
 
-Because Abolish is meant for **Custom validations** only **11 default validators** are available out of the box.
+Because Abolish is meant for **Custom validations** only **12 default validators** are available out of the box.
 
 ### Menu
 
@@ -65,7 +65,7 @@ Abolish.attempt("20", "min:25");
 
 ### maxLength
 
-Similar to [max](#max), but for **strings**
+Similar to [max](#max), but for **strings/array**
 
 ```javascript
 Abolish.attempt("password", "maxLength:250");
@@ -73,6 +73,13 @@ Abolish.attempt("password", "maxLength:250");
 
 Abolish.attempt("This is a sentence", "maxLength:10");
 // Error: Variable is too long. (Max. 10 characters)
+
+
+Abolish.attempt(["a", "b", "c"], "maxLength:5");
+// pass
+
+Abolish.attempt(["a", "b", "c", "d"], "maxLength:2");
+// Error: Variable lenght is too long. (Max. 2)
 ```
 
 ### min
@@ -93,7 +100,7 @@ Abolish.attempt("20", "min:18");
 
 ### minLength
 
-Similar to [min](#min), but for **strings**
+Similar to [min](#min), but for **strings/arrays**
 
 ```javascript
 Abolish.attempt("password", "minLength:6");
@@ -101,6 +108,12 @@ Abolish.attempt("password", "minLength:6");
 
 Abolish.attempt("pass", "minLength:6");
 // Error: Variable is too short. (Min. 6 characters)
+
+Abolish.attempt(["a", "b", "c"], "minLength:2");
+// Pass
+
+Abolish.attempt(["a"], "minLength:2");
+// Error: Variable lenght is too short. (Min. 2)
 ```
 
 ### size
@@ -133,7 +146,8 @@ Abolish.test(["a", "b", "c", "d"], {size: [2, 3]}); // false
 
 ### object
 
-Validate an object using abolish rules.
+- Check if the variable is an object.
+- Validate an object using abolish rules.
 
 ```javascript
 const data = {
@@ -172,7 +186,8 @@ Abolish.attempt(data, {
 
 ### objectAsync
 
-Validate an object using abolish async validator.
+- Check if the variable is an object.
+- Validate an object using abolish async rules.
 
 ```javascript
 const address = {

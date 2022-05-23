@@ -19,7 +19,12 @@ Abolish also provides additional validators that can be registered and used to v
     -   [string](#string)
     -   [url](#url)
 -   Array
-    -   [any](#any)
+    - [any](#any)
+    - [array](#array)
+    - [arraySize](#arraysize)
+    - [arrayValues](#arrayvalues)
+    - [arrayValuesAsync](#arrayvaluesasync)
+    - [inArray](#inarray)
 -   Utils
     -   [same](#same)
 
@@ -306,6 +311,17 @@ Abolish.test(["hello", 1, 2], {array: ["string", "number"]}); // => true
 Abolish.test(["hello", 1, 2, {}], { array: ["string", "number"] })) // => false
 ```
 
+### arraySize
+Unlike `size` validator, `arraySize` is explicitly for arrays.
+
+```javascript
+Abolish.test([1,2,3], "arraySize:3"); // => true
+Abolish.test([1,2,3,4], "arraySize:3"); // => false
+
+// Check either using multiple sizes
+Abolish.test(["a", "b", "c"], {arraySize: [2, 3]}); // => true
+Abolish.test(["a", "b", "c", "d"], {arraySize: [2, 3]}); // => false
+```
 
 ### arrayValues
 Validate array values using **abolish rules**
@@ -314,7 +330,7 @@ The validator will stop once it finds a value that fails validation.
 ```javascript
 // validating an array of iso3 country codes
 Abolish.test(["USA", "CAN"], {
-    arrayValues: "string:minLength:3:maxLength:3"
+    arrayValues: "typeof:string|size:3"
 }); // => true
 
 // Or a more complex array of objects
@@ -333,6 +349,9 @@ const value = Abolish.attempt(data, {
     }
 });
 ```
+
+### arrayValuesAsync
+Same as [arrayValues](#arrayvalues) but uses async validator to validate each value.
 
 
 ### inArray
