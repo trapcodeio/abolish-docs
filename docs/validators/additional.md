@@ -282,15 +282,102 @@ Abolish.test("https://google.com", "url"); // => true
 
 ### any
 
-Check if the value is an array.
+::: warning
+**Deprecated**: Use `inArray` instead.
+:::
+
+### array
+
+- Check if the validated value is an array 
+- Or If the array values is of the types specified as option.
+
+```javascript
+Abolish.test(1, "array"); // => false
+Abolish.test([1,2,3], "array"); // => true
+
+// Check if the value is an array of numbers
+Abolish.test([1,2,3], "array:number"); // => true
+
+// Or check if array values are either of type string or number
+Abolish.test(["hello", 1, 2], {array: ["string", "number"]}); // => true
+
+// The test below will fail because 
+// `object` is not included in the types array.
+Abolish.test(["hello", 1, 2, {}], { array: ["string", "number"] })) // => false
+```
+
+
+### arrayValues
+Validate array values using **abolish rules**
+The validator will stop once it finds a value that fails validation.
+
+```javascript
+// validating an array of iso3 country codes
+Abolish.test(["USA", "CAN"], {
+    arrayValues: "string:minLength:3:maxLength:3"
+}); // => true
+
+// Or a more complex array of objects
+const data = [
+    { id: 1, name: "John" },
+    { id: 2, name: "Jane" },
+    { id: 3, name: "Jack" }
+];
+
+const value = Abolish.attempt(data, {
+    arrayValues: {
+        object: {
+            id: "typeof:number",
+            name: "typeof:string"
+        }
+    }
+});
+```
+
+
+### inArray
+Check if validated value exists in an array.
+
+**Note:** this method uses `===` to check if the value exists in the given array and can not handle arrays where values are typeof `objects`.
+To check if the value exists in an array of objects, see [Using a function as option](#using-a-function-as-option).
 
 ```javascript
 const role = "user";
-Abolish.test(role, { any: ["staff", "admin"] }); // => false
-Abolish.test(role, { any: ["user", "subscriber"] }); // => true
+Abolish.test(role, { inArray: ["staff", "admin"] }); // => false
+Abolish.test(role, { inArray: ["user", "subscriber"] }); // => true
 ```
 
-Note: Maybe renamed/aliased to `inArray` in the future.
+#### Using a function as option
+`inArray` supports using a function as an option.
+
+If the function returns a `boolean` value, `inArray` will assume you passed a validator function.
+Else if it returns an `array`, `inArray` will use the returned array as the array to check against.
+
+**Note:** Any function passed to `inArray` will be called with the value to validate as the first argument.
+
+```javascript
+const roles = ["user", "admin", "staff"];
+// Using a function to return the array to check against
+Abolish.test("user", { inArray: () => ["staff", "admin"]}); // => true
+
+
+// Using a function to returns boolean
+Abolish.test("user", { inArray: (value) => roles.includes(value) }); // => true
+
+// A more complex example
+const users =  [
+    { name: "John", role: "admin" },
+    { name: "Jane", role: "staff" },
+    { name: "Sam", role: "user" }
+];
+
+Abolish.test(users[1], {
+    // v is the value to validate i.e `users[1]`
+    inArray: (v) => users.some((user) => user.name === v.name && user.role === v.role)
+}) // => true
+```
+
+
 
 ## Utility Validators
 

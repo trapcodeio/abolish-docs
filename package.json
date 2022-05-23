@@ -5,8 +5,8 @@
   "main": "index.md",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "vuepress dev docs --port 8111",
-    "docs:build": "vuepress build docs",
+    "docs:dev": "npx vuepress dev docs --port 8111",
+    "docs:build": "npx vuepress build docs",
     "test": "nodemon test.js"
   },
   "devDependencies": {

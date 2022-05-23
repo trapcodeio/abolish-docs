@@ -9,16 +9,18 @@ Because Abolish is meant for **Custom validations** only **11 default validators
 
 ### Menu
 
--   [default](#default)
--   [exact](#exact)
--   [max](#max)
--   [maxLength](#maxlength)
--   [min](#min)
--   [minLength](#minlength)
--   [object](#object)
--   [required](#required)
--   [type](#type)
--   [typeof](#typeof)
+- [default](#default)
+- [exact](#exact)
+- [max](#max)
+- [maxLength](#maxlength)
+- [min](#min)
+- [minLength](#minlength)
+- [size](#size)
+- [object](#object)
+- [objectAsync](#objectasync)
+- [required](#required)
+- [type](#type)
+- [typeof](#typeof)
 
 ## Validators
 
@@ -99,6 +101,34 @@ Abolish.attempt("password", "minLength:6");
 
 Abolish.attempt("pass", "minLength:6");
 // Error: Variable is too short. (Min. 6 characters)
+```
+
+### size
+Check if the length of a variable (String, Array or Object) is equal to the option given.
+
+```javascript
+// String
+Abolish.test("hello", "size:5")); // true
+Abolish.test("hello", "size:4")); // false
+
+// Array
+Abolish.test([1, 2, 3], "size:3")); // true
+Abolish.test([1, 2, 3], "size:2")); // false
+
+// Object
+Abolish.test({ a: 1, b: 2, c: 3 }, "size:3")); // true
+Abolish.test({ a: 1, b: 2, c: 3 }, "size:2")); // false
+```
+
+Size also supports using an array of numbers as option for multiple sizes.
+
+```javascript
+Abolish.test(["a", "b", "c"], {size: [2, 3]}); // true
+
+
+Abolish.test(["a", "b", "c", "d"], {size: [2, 3]}); // false
+// The example above will fail becasue the array has 4 elements.
+// and the size option is either [2, 3]
 ```
 
 ### object
