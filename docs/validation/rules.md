@@ -124,7 +124,7 @@ Abolish.attempt(18, [
 
 Unlike [`$error`](#error), the `$errors` key gives you the ability to define/override errors for each validator.
 
-Note: The `$error` key overrides the `$errors` key.
+Note: The `$errors` key overrides the `$error` key.
 
 ```javascript
 Abolish.attempt("not a number", ["typeof:number|max:5"]);
