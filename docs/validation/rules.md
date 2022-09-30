@@ -234,14 +234,14 @@ const isEmail = Rule([
 };
 ```
 
-### ParseRules()
+### Schema()
 
-The `ParseRules` function is used to parse `key:rule` pairs.
+The `Schema` function is used to parse `key:rule` pairs.
 
 ```javascript
-const {ParseRules} = require("abolish"); // OR import {ParseRules} from "abolish";
+const {Schema} = require("abolish"); // OR import {Schema} from "abolish";
 
-const rules = ParseRules({
+const rules = Schema({
     name: "required|string",
     age: "required|typeof:number|min:18|max:100"
 });

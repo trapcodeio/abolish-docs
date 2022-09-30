@@ -1,4 +1,7 @@
-module.exports = {
+import {defaultTheme, defineUserConfig} from "vuepress";
+import {searchPlugin} from "@vuepress/plugin-search";
+
+export default defineUserConfig({
     // bundler: '@vuepress/bundler-vite',
     lang: "en-US",
     title: "Abolish",
@@ -7,16 +10,16 @@ module.exports = {
     description: "A Javascript object validator for custom validations",
 
     markdown: {
-        code: { lineNumbers: false }
+        code: {lineNumbers: false}
     },
 
     head: [
         [
-          'link',
-          {
-            rel: 'canonical',
-            href: 'https://abolish.trapcode.io'
-          },
+            'link',
+            {
+                rel: 'canonical',
+                href: 'https://abolish.trapcode.io'
+            },
         ],
         [
             "link",
@@ -27,7 +30,7 @@ module.exports = {
         ]
     ],
 
-    themeConfig: {
+    theme: defaultTheme({
         logo: "/abolish-black.svg",
         logoDark: "abolish-white.svg",
         navbar: [
@@ -78,13 +81,12 @@ module.exports = {
                 ]
             }
         ]
-    },
+    }),
+
+
     plugins: [
-        [
-            "@vuepress/search",
-            {
-                searchMaxSuggestions: 10
-            }
-        ]
+        searchPlugin({
+            maxSuggestions: 10
+        })
     ]
-};
+});
