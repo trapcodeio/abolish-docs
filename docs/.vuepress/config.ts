@@ -2,7 +2,6 @@ import {defaultTheme, defineUserConfig} from "vuepress";
 import {searchPlugin} from "@vuepress/plugin-search";
 
 export default defineUserConfig({
-    // bundler: '@vuepress/bundler-vite',
     lang: "en-US",
     title: "Abolish",
     // heroText: " ",

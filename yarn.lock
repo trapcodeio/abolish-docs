@@ -573,10 +573,10 @@
   dependencies:
     vue-demi "*"
 
-abolish@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/abolish/-/abolish-6.1.0.tgz#84c2649a96e7cb4ba648a498e1bf5ba594749c64"
-  integrity sha512-u1VW95TSKgEPl0ggzsrLfJLzSrjgSz8Jh9X6wGt2nsX6xNlLPrL1jSWAcZvuPP9I+NCxC0Nbo5VaBCygmOSJaA==
+abolish@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/abolish/-/abolish-6.3.0.tgz#754960e3cc24b7ed4f3390b65541f508e6fdf78f"
+  integrity sha512-iGJdK8SbmriMjKP5IMH9qXcbD/yjGka09L+/QhtsQlA5TH1SRfKJ9/xf0ZFwmS84IKFTgw86X6p33ioE9d0ajg==
   dependencies:
     lodash "^4.17.21"
 
