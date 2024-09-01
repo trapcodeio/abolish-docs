@@ -26,8 +26,16 @@ scope.
     - [arrayValues](#arrayvalues)
     - [arrayValuesAsync](#arrayvaluesasync)
     - [inArray](#inarray)
+    - [notInArray](#notinarray)
+- Object
+    - [objectValues](#objectvalues)
+    - [objectValuesAsync](#objectvaluesasync)
+    - [objectValuesType](#objectvaluestype)
 - Utils
     - [same](#same)
+- Number
+    - [gt](#gt)
+    - [lt](#lt)
 
 ## File Structure
 
@@ -184,20 +192,20 @@ Note: In `object` using `validate/validateAsync`, Decoded values can also be val
 
 ```javascript
 const json = JSON.stringify({
-  city: "New York",
-  country: "USA"
+    city: "New York",
+    country: "USA"
 });
 
 Abolish.attempt(json, [
-  "json|jsonDecode",
-  // This will validate the decoded value
-  // because it was called after `json|jsonDecode`
-  {
-    object: {
-      city: "required|string",
-      country: "required|string"
+    "json|jsonDecode",
+    // This will validate the decoded value
+    // because it was called after `json|jsonDecode`
+    {
+        object: {
+            city: "required|string",
+            country: "required|string"
+        }
     }
-  }
 ]);
 ```
 
@@ -208,8 +216,8 @@ Encode the value as JSON.
 ```javascript
 const json = Abolish.attempt(
     {
-      city: "New York",
-      country: "USA"
+        city: "New York",
+        country: "USA"
     },
     "jsonEncode"
 );
@@ -335,23 +343,23 @@ The validator will stop once it finds a value that fails validation.
 ```javascript
 // validating an array of iso3 country codes
 Abolish.test(["USA", "CAN"], {
-  arrayValues: "typeof:string|size:3"
+    arrayValues: "typeof:string|size:3"
 }); // => true
 
 // Or a more complex array of objects
 const data = [
-  {id: 1, name: "John"},
-  {id: 2, name: "Jane"},
-  {id: 3, name: "Jack"}
+    {id: 1, name: "John"},
+    {id: 2, name: "Jane"},
+    {id: 3, name: "Jack"}
 ];
 
 const value = Abolish.attempt(data, {
-  arrayValues: {
-    object: {
-      id: "typeof:number",
-      name: "typeof:string"
+    arrayValues: {
+        object: {
+            id: "typeof:number",
+            name: "typeof:string"
+        }
     }
-  }
 });
 ```
 
@@ -392,15 +400,65 @@ Abolish.test("user", {inArray: (value) => roles.includes(value)}); // => true
 
 // A more complex example
 const users = [
-  {name: "John", role: "admin"},
-  {name: "Jane", role: "staff"},
-  {name: "Sam", role: "user"}
+    {name: "John", role: "admin"},
+    {name: "Jane", role: "staff"},
+    {name: "Sam", role: "user"}
 ];
 
 Abolish.test(users[1], {
-  // v is the value to validate i.e `users[1]`
-  inArray: (v) => users.some((user) => user.name === v.name && user.role === v.role)
+    // v is the value to validate i.e `users[1]`
+    inArray: (v) => users.some((user) => user.name === v.name && user.role === v.role)
 }) // => true
+```
+
+### notInArray
+
+Check that a value is not in an array.
+
+```javascript
+const roles = ["user", "admin", "staff"];
+Abolish.test("user", {notInArray: roles}); // => false
+Abolish.test("superuser", {notInArray: roles}); // => true
+```
+
+#### Using a function as option
+
+The array can be computed using a function.
+
+```javascript
+Abolish.test("user", {notInArray: () => ["staff", "admin"]}); // => true
+```
+
+The function can also return a boolean value that will be used to determine if the value is in the array.
+
+```javascript
+const roles = ["user", "admin", "staff"];
+Abolish.test("member", {
+    notInArray: (value) => !roles.includes(value)
+}); // => true
+```
+
+Or something more complex
+
+```ts
+type User = { name: string; role: string };
+const users: User[] = [
+    // random list of users
+    {name: "John", role: "admin"},
+    {name: "Jane", role: "staff"},
+    {name: "Sam", role: "user"}
+];
+
+
+Abolish.test(
+    {name: "John1", role: "admin3"},
+    {notInArray: (v: User) => !users.some((user) => user.name === v.name)}
+) // => true
+
+
+Abolish.test(users[1], {
+    notInArray: (v: User) => !users.some((user) => user.name === v.name)
+}) // => false
 ```
 
 ## Object Validators
@@ -412,19 +470,19 @@ The validator will stop once it finds a value that fails validation.
 
 ```javascript
 const paymentMethods = {
-  paypal: {currency: "USD", enabled: true},
-  stripe: {currency: "USD", enabled: true},
-  paystack: {currency: "NGN", enabled: false},
-  coinpayments: {currency: "BTC", enabled: true}
+    paypal: {currency: "USD", enabled: true},
+    stripe: {currency: "USD", enabled: true},
+    paystack: {currency: "NGN", enabled: false},
+    coinpayments: {currency: "BTC", enabled: true}
 }
 
 Abolish.test(paymentMethods, {
-  objectValues: {
-    object: {
-      currency: "typeof:string|size:3",
-      enabled: "typeof:boolean"
+    objectValues: {
+        object: {
+            currency: "typeof:string|size:3",
+            enabled: "typeof:boolean"
+        }
     }
-  }
 }) // => true
 ```
 
@@ -441,7 +499,7 @@ Abolish.test({a: 1, b: 2}, "objectValuesType:number"); // => true
 
 // Also supports multiple types
 Abolish.test({a: 1, b: "hello"}, {
-  objectValuesType: ["number", "string"]
+    objectValuesType: ["number", "string"]
 }); // => true
 ```
 
@@ -453,16 +511,76 @@ Check if value is the same as the value of the given key in an object.
 
 ```javascript
 const form = {
-  password: "hello",
-  confirmPassword: "hello!"
+    password: "hello",
+    confirmPassword: "hello!"
 };
 
 Abolish.test(form, {
-  object: {
-    password: "required|string",
-    confirmPassword: "required|string|same:password"
-  }
+    object: {
+        password: "required|string",
+        confirmPassword: "required|string|same:password"
+    }
 }); // false
 
 // Error: Confirm Password must be the same as password.
+```
+
+## Number Validators
+
+### gt
+
+Check if a number is greater than the specified value.
+
+```javascript
+Abolish.test(10, "gt:5"); // => true
+Abolish.test(5, "gt:5"); // => false
+```
+
+### lt
+
+Check if a number is less than the specified value.
+
+```javascript
+Abolish.test(5, "lt:10"); // => true
+Abolish.test(10, "lt:10"); // => false
+```
+
+## Date Validators
+
+### age
+Check if a date is within a specified age range. This validator supports checking if
+
+- date is `=` to the specified age
+- date is `>=` to the specified age
+- date is `<=` to the specified age
+- date is `>` to the specified age
+- date is `<` to the specified age
+- date is `-` i.e between two ages
+
+Note: Date can be a string or a `Date` object. The string will be converted to a `Date` object.
+
+```javascript
+// Equal To
+Abolish.test(EighteenYearsAgo, "age:18"); // => true
+Abolish.test(EighteenYearsAgo, "age:=18"); // => true
+
+// Greater Than
+Abolish.test(EighteenYearsAgo, "age:>17"); // => true
+Abolish.test(TwoYearsAgo, "age:>18"); // => false
+
+// Less Than
+Abolish.test(EighteenYearsAgo, "age:<19"); // => true
+Abolish.test(TwentyYearsAgo, "age:<19"); // => false
+
+// Between
+Abolish.test(EighteenYearsAgo, "age:18-20"); // => true
+Abolish.test(TwentyYearsAgo, "age:5-10"); // => false
+
+// Greater Than or Equal To
+Abolish.test(EighteenYearsAgo, "age:>=18"); // => true
+Abolish.test(TwoYearsAgo, "age:>=18"); // => false
+
+// Less Than or Equal To
+Abolish.test(EighteenYearsAgo, "age:<=18"); // => true
+Abolish.test(TwentyYearsAgo, "age:<=18"); // => false
 ```

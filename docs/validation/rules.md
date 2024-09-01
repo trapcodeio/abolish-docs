@@ -72,7 +72,6 @@ For example:
 ["required", { minLength: 2 }];
 // => { required: true, minLength: 2 }
 
-// prettier-ignore
 // Or when using super rules that begins with `$`
 [
     "required|minLength:2",
