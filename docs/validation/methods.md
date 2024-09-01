@@ -20,7 +20,7 @@ Abolish provides **4** validation Methods: `validate, attempt, check, test`. All
 
 ## validate
 
-The validate method is for validating objects. unlike other methods,
+The validate method is for validating **objects**. unlike other methods,
 <br>it takes an Object of `{key: rules}` structure as rules.
 
 <CodeGroup>
@@ -78,7 +78,7 @@ console.log([err, validated]);
   </CodeGroupItem>
 </CodeGroup>
 
-### $include
+### Include Fields - $include
 
 From the example [above](#validate), you will notice that only keys defined in rules are returned in validated.
 i.e. `referrer` which is present in the `data` object, is not included in the returned validated object.
@@ -114,6 +114,56 @@ console.log([err, validated]);
 ];
 ```
 
+### Strict Mode - $strict
+The $strict key is used to enforce that only keys defined in the rules object are allowed in the data object.
+Should any key not defined in the rules object be found in the data object, an error will be thrown.
+
+To enable strict mode, set `$strict` to `true` like so:
+```js
+let data = {email: "mail@example.com", password: "12345"}
+
+let [err, body] = Abolish.validate(data, {
+    $strict: true,  // Enable strict mode
+    email: "required|typeof:string"
+});
+```
+
+An error will be thrown because `password` is not defined in the rules object.
+
+```json
+{
+  "code": "object.unknown",
+  "type": "internal",
+  "key": "$strict",
+  "validator": "$strict",
+  "message": "Data contains unknown fields!",
+  "data": {
+    "unknown": [
+      "password"
+    ]
+  }
+}
+```
+
+To allow specific keys to ignored by the strict mode:
+
+- we can either pass them as an array option to `$strict`
+- or add them to the `$include` array.
+
+```js
+// via array option
+let [ err, body ] = Abolish.validate(data, {
+    $strict: ["password"],
+    email: "required|typeof:string"
+});
+
+// or via $include
+let [ err, body ] = Abolish.validate(data, {
+    $strict: true,
+    $include: ["password"],
+    email: "required|typeof:string"
+});
+```
 ### Wildcard
 
 The Wildcard rules `*` or `$` can be used to define rules that will apply to all keys defined in a rules object.

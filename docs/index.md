@@ -217,3 +217,50 @@ await Abolish.attemptAsync("admin@example.com", "EmailBelongsToUser");
 // Else Error will be thrown.
 `Email "admin@example.com" does not belong to user.`;
 ```
+
+## Go Fast!! 🚀🚀
+Abolish can be **70% faster** when using **compiled** schemas.
+
+When running validations, all the cycles (e.g parsing rules, mapping rules to validator functions) are repeated for each validation. 
+This can be slow when running multiple validations.
+
+With compiled schemas, the cycles are done once and the compiled schema is used for all validations.
+
+### Features 
+Compiled schemas:
+
+- Includes all validators in the schema.
+- Builds a standalone validator function that does not require the Abolish class to run.
+- Faster when running multiple validations.
+
+
+### Usage
+For validating **`variables`**, you can compile the schema using the **`Abolish.compile`** function
+
+```js
+const AgeSchema = Abolish.compile("typeof:number|min:18");
+
+// use the compiled schema standalone
+const [err, val] = AgeSchema.validate(17);
+
+// use with abolish
+const [err, val] = Abolish.check(17, AgeSchema);
+```
+
+For validating **`objects`**, you can compile the schema using the **`Abolish.compileObject`** function
+
+```js
+const UserSchema = Abolish.compileObject({
+    email: "required|typeof:string",
+    password: "required|typeof:string|minLength:6"
+});
+
+// use the compiled schema standalone
+const [err, val] = UserSchema.validate(form);
+
+// use with abolish
+const [err, val] = Abolish.validate(form, UserSchema);
+```
+
+### More Details
+See the [`AbolishCompiled`](./validation/compiled.md) class for usage and methods.
